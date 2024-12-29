@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    /* Main Container Styles */
+    .container {
+        padding: 3rem 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Card Styles */
+    .custom-card {
+        background: linear-gradient(145deg, #ffffff, #f5f5f5);
+        border-radius: 15px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 3rem;
+    }
+
+    /* Heading Styles */
+    .home_h {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Form Styles */
+    .input_form {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    }
+
+    label {
+        color: #2c3e50;
+        font-size: 1.1rem;
+    }
+
+    /* Button Styles */
+    .submit_btn {
+        background-color: #4a90e2;
+        color: white;
+        padding: 0.8rem 2.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .submit_btn:hover {
+        background-color: #357abd;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+    }
+
+    /* Results Card Styles */
+    .card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 0.5rem;
+    }
+
+    .card-text {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .home_h {
+            font-size: 2rem;
+        }
+        
+        .container {
+            padding: 1.5rem 1rem;
+        }
+        
+        .custom-card {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="custom-card">
+        <h1 class="home_h">Recommendation System</h1>
+        <form action="{% url 'recommend' %}" method="POST" class="input_form mb-5">
+            {% csrf_token %}
+            <div class="row mb-4 d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <label for="product" class="mb-2 fw-bolder">Enter Title</label>
+                    <input type="text" class="form-control" name="product" placeholder="Enter title" id="product" required="required">
+                </div>
+            </div>
+            <div class="mt-5 d-flex justify-content-center">
+                <button type="submit" class="btn submit_btn">Recommend</button>
+            </div>
+        </form>
+    </div>
+    {% if recommendations %}
+    <div class="row g-5 my-5">
+        {% for product in recommendations %}
+        <div class="col-md-4">
+            <div class="card p-4 bg-dark text-light">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.Title }}</h5>
+                    <p class="card-text">Category: {{ product.Category }}</p>
+                    <p class="card-text">Sub-Category: {{ product.Sub_Category }}</p>
+                    <p class="card-text">Price: ${{ product.Price }}</p>
+                    <p class="card-text">Ratings: {{ product.Ratings }}</p>
+                    <p class="card-text">Total Ratings: {{ product.Total_Ratings }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
