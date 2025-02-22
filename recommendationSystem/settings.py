@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-)ss@y3d(8vk@s^04lx0x_(6_d3^t3pd*0se3ii_c6p2wk6(y9t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ecomm-product-recommendation-system-1.onrender.com"]
 
 
 # Application definition
